@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "clientViewAng10"
+    }
+  },
+  "defaultProject": "clientViewAng10",
+  "cli": {
+    "analytics": "aad8088d-0ab9-4e3b-be45-408cf99f67f8"
+  }
 }

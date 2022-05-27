@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #0425aa;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: rgb(85, 85, 85);
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="#clients">Clients</a>
+  <a href="#clients">Clients look History</a>
+  <a href="#clients">Emergency PIN configuration</a>
+  <a href="#clients">Emergency PIN History</a>
+</div>
+
+<div class="content">
+    <div class="container">
+        <h1>{{title}}</h1>
+        <button class="btn btn-primary" type="button" [routerLink]="['/clients/form']">New Client</button>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search by Shared Key" aria-label="Search by Shared Key"
+                aria-describedby="button-addon2" [(ngModel)]="searchSharedKey" id="search" >
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">SharedKey</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">DataCreation</th>
+                    <th scope="col">Edit</th> 
+                    <th scope="col">Delete</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let client of clients | filter:searchSharedKey">
+                    <th scope="row">{{client.id}}</th>
+                    <td>{{client.sharedKey}}</td>
+                    <td>{{client.name}}</td>
+                    <td>{{client.email}}</td>
+                    <td>{{client.phone}}</td> 
+                    <td>{{client.creationDate}}</td>
+                    
+                    
+                    <td><button type="button" name="button" class="btn btn-primary" [routerLink]="['/clients/form/',client.id]" > Edit</button></td>
+                    <td><button type="button" name="button" class="btn btn-danger" (click)="delete(client)" > Delete</button></td>
+                </tr>
+    
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
