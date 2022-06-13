@@ -68,8 +68,9 @@ export class ClientsComponent implements OnInit {
 
   clickme(name:string) {
     var blankposition=name.indexOf(' ');
-    var cadenanueva=name.charAt(0)+name.substring(blankposition,name.length).trim();
-    this.client.sharedKey=cadenanueva;
+    var cadenanueva=name.charAt(0)+name.substring(blankposition,name.length);
+    this.client.sharedKey=cadenanueva.replace(/ /g, "");
+    console.log("SharedKey:"+cadenanueva);
   }
   
 
