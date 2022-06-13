@@ -12,7 +12,7 @@ export class FilterPipe implements PipeTransform {
       return clients;  
     }
     return clients.filter(client=>
-       client.sharedKey.toLocaleLowerCase().includes(searchSharedKey.toLocaleLowerCase()));
+       client.sharedKey?.toLocaleLowerCase().includes(searchSharedKey?.toLocaleLowerCase()));
   }
 
 }
