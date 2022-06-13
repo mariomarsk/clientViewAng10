@@ -1,112 +1,172 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  margin: 0;
-  font-family: "Lato", sans-serif;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Lato", sans-serif;
+    }
 
-.sidebar {
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-}
+    .sidebar {
+      margin: 0;
+      padding: 0;
+      width: 200px;
+      background-color: #f1f1f1;
+      position: fixed;
+      height: 100%;
+      overflow: auto;
+    }
 
-.sidebar a {
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
-}
- 
-.sidebar a.active {
-  background-color: #0425aa;
-  color: white;
-}
+    .sidebar a {
+      display: block;
+      color: black;
+      padding: 16px;
+      text-decoration: none;
+    }
 
-.sidebar a:hover:not(.active) {
-  background-color: rgb(85, 85, 85);
-  color: white;
-}
+    .sidebar a.active {
+      background-color: #0425aa;
+      color: white;
+    }
 
-div.content {
-  margin-left: 200px;
-  padding: 1px 16px;
-  height: 1000px;
-}
+    .sidebar a:hover:not(.active) {
+      background-color: rgb(85, 85, 85);
+      color: white;
+    }
 
-@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
-}
+    div.content {
+      margin-left: 200px;
+      padding: 1px 16px;
+      height: 1000px;
+    }
 
-@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
-}
-</style>
+    @media screen and (max-width: 700px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .sidebar a {
+        float: left;
+      }
+
+      div.content {
+        margin-left: 0;
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      .sidebar a {
+        text-align: center;
+        float: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="sidebar">
-  <a class="active" href="#clients">Clients</a>
-  <a href="#clients">Clients look History</a>
-  <a href="#clients">Emergency PIN configuration</a>
-  <a href="#clients">Emergency PIN History</a>
-</div>
+  <div class="sidebar">
+    <a class="active" href="#clients">Clients</a>
+    <a href="#clients">Clients look History</a>
+    <a href="#clients">Emergency PIN configuration</a>
+    <a href="#clients">Emergency PIN History</a>
+  </div>
 
-<div class="content">
+  <div class="content">
     <div class="container">
-        <h1>{{title}}</h1>
-        <button class="btn btn-primary" type="button" [routerLink]="['/clients/form']">New Client</button>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search by Shared Key" aria-label="Search by Shared Key"
-                aria-describedby="button-addon2" [(ngModel)]="searchSharedKey" id="search" >
-        </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">SharedKey</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">DataCreation</th>
-                    <th scope="col">Edit</th> 
-                    <th scope="col">Delete</th> 
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let client of clients | filter:searchSharedKey">
-                    <th scope="row">{{client.id}}</th>
-                    <td>{{client.sharedKey}}</td>
-                    <td>{{client.name}}</td>
-                    <td>{{client.email}}</td>
-                    <td>{{client.phone}}</td> 
-                    <td>{{client.creationDate}}</td>
-                    
-                    
-                    <td><button type="button" name="button" class="btn btn-primary" [routerLink]="['/clients/form/',client.id]" > Edit</button></td>
-                    <td><button type="button" name="button" class="btn btn-danger" (click)="delete(client)" > Delete</button></td>
-                </tr>
-    
-            </tbody>
-        </table>
+      <h1>{{title}}</h1>
+      <button class="btn btn-primary" type="button" (click)="open(content)">New Client</button>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by Shared Key" aria-label="Search by Shared Key"
+          aria-describedby="button-addon2" [(ngModel)]="searchSharedKey" id="search">
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">SharedKey</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">DataCreation</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of clients | filter:searchSharedKey">
+            <th scope="row">{{client.id}}</th>
+            <td>{{client.sharedKey}}</td>
+            <td>{{client.name}}</td>
+            <td>{{client.email}}</td>
+            <td>{{client.phone}}</td>
+            <td>{{client.creationDate}}</td>
+
+
+            <td><button type="button" name="button" class="btn btn-primary" [routerLink]="['/clients/form/',client.id]">
+                Edit</button></td>
+            <td><button type="button" name="button" class="btn btn-danger" (click)="delete(client)"> Delete</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
     </div>
-</div>
+  </div>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create New Client</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #userForm="ngForm" class="was-validated">
+        <div class="form-group row">
+          <label for="name" class="col-form-label col-sm-2">Name</label>
+          <div class="col-sm-6">
+            <input (change)="clickme(name.value)" pattern="^([a-zA-Z]+)(\s[a-zA-Z]+)*$" required #name="ngModel" type="text" name ngModel class="form-control" name="name" [(ngModel)]="client.name">
+            <span *ngIf="name.invalid && name.touched" class="error"> Name is not valid</span>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="phone" class="col-form-label col-sm-2">Phone</label>
+          <div class="col-sm-6">
+            <input required type="number" class="form-control" name="phone" [(ngModel)]="client.phone">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="email" class="col-form-label col-sm-2">Email</label>
+          <div class="col-sm-6">
+            <input required #email="ngModel" type="email" email ngModel class="form-control" name="email" [(ngModel)]="client.email" >
+            <span *ngIf="email.invalid && email.touched" class="error"> Email is not valid</span>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="sharedKey" class="col-form-label col-sm-2">Shared Key</label>
+          <div class="col-sm-6">
+            <input type="text" value ={{client.name}} disabled=true class="form-control" name="sharedKey" [(ngModel)]="client.sharedKey" >
+
+          </div>
+        </div>
+
+        <button [disabled]="userForm.invalid" class="btn btn-primary" role="button" (click)='create()'>Add
+          Client</button>
+
+
+      </form>
+    </div>
+
+  </ng-template>
 
 </body>
+
 </html>
